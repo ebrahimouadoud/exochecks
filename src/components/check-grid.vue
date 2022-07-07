@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div v-if="!totalCheck" class="row W-75" style="height: 100px; flex-direction: row;">
-            <div v-for="(item, index) in casesArrays" :key="index" class="col-3 m-2 alert alert-warning">
+            <div v-for="(item, index) in casesArrays" :key="index" 
+                :class="['col-3 m-2 alert', (!item.checked ? 'alert-warning': 'alert-success')]">
                 <button class="h1 btn btn-lg" @click="checkCase(item, index)" :disabled="!item.checkable">
                     <b-icon v-if="!item.checked" icon="exclamation-circle-fill" variant="warning"></b-icon>
                     <b-icon v-else icon="check-circle-fill" variant="success"></b-icon>
@@ -34,18 +35,9 @@ export default {
     methods: {
         checkCase(item, index){
             item.checked = true
-            if(this.casesArrays[index+1])
-                this.casesArrays[index+1].checkable = 1
-            this.totalCheck=this.casesArrays.every( val => val.checked === true)
-            console.log('this.totalCheck :: ', this.totalCheck)
-            //this.setChecability()
-        },
-        setChecability(){
-            console.log("casesArrays ::", this.casesArrays )
-            for (let index = 1; index < this.casesArrays.length; index++) {
-                if(this.casesArrays[index-1].checked)
-                    this.casesArrays[index].checkable = true
-            }
+            if(this.casesArrays[index+1] )
+                this.casesArrays[index+1].checkable = true
+            this.totalCheck = this.casesArrays.every( val => val.checked === true)
         }
     },
 }
